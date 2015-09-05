@@ -71,22 +71,42 @@ void *manage(void *arg_void){
 	aux=mysearch(aux,auxmax,'>');
 	if(aux==NULL)return NULL;
 	priority=atoi(cpriority);
-	if(priority!=myprio)return NULL;  
-
-  //parsing
-  mytime=aux; aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  host=aux; aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  channel=aux; aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  type=aux; aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  in=aux; aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  out=aux; aux=mysearch(aux,auxmax,','); if(aux==NULL)return NULL;
-  aux=mysearch(aux,auxmax,','); if(aux==NULL)return NULL;
-  aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  proto=aux; aux=mysearch(aux,auxmax,','); if(aux==NULL)return NULL;
-  if(strlen(proto)>3)*(proto+3)='\0';
-  aux=mysearch(aux,auxmax,' '); if(aux==NULL)return NULL;
-  ipsrc=aux; aux=mysearch(aux,auxmax,':'); if(aux==NULL)return NULL;
+	if(priority!=myprio)return NULL;
+	
+	// string parsing
+	mytime=aux;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	host=aux;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	channel=aux;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	type=aux;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	in=aux;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	out=aux;
+	aux=mysearch(aux,auxmax,',');
+	if(aux==NULL)return NULL;
+	aux=mysearch(aux,auxmax,',');
+	if(aux==NULL)return NULL;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	proto=aux;
+	aux=mysearch(aux,auxmax,',');
+	if(aux==NULL)return NULL;
+	if(strlen(proto)>3)*(proto+3)='\0';
+	aux=mysearch(aux,auxmax,' ');
+	if(aux==NULL)return NULL;
+	ipsrc=aux;
+	aux=mysearch(aux,auxmax,':');
+	if(aux==NULL)return NULL;
   portsrc=aux; aux=mysearch(aux,auxmax,'-'); if(aux==NULL)return NULL;
   aux=mysearch(aux,auxmax,'>'); if(aux==NULL)return NULL;
   ipdst=aux; aux=mysearch(aux,auxmax,':'); if(aux==NULL)return NULL;
