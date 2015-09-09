@@ -1,5 +1,7 @@
 # mysyslog
+
 written by Gianluca Mazzini gianluca@mazzini.org
+
 started in 2015
 
 syslog C demon with file logging and query issue
@@ -11,6 +13,8 @@ configuration file is space or \n separated fields and is supposed to be in /mys
 only one configuration file is necessary: mysyslog.conf with configuration action
 
 mysyslog.conf contains in the first line: the syslog UDP receiving port, the syslog priority to be processed, the number of client allowed to send syslog; then the following lines are the ipv4 address of the allowed clients
+
+Note that “The Priority value is calculated by first multiplying the Facility number by 8 and then adding the numerical value of the Severity.” then local0.info has local0=16 and info=6 the priority=16*8+6=134
 
 each log file is automatic generated with path /mysyslog/log and filename in the format YYYYMMGG.log which is defined at the starting time. In order to have a different file for each day it is suggested to restart the demon every night at 00:00. In any case if any restart occurs with the same filename, and then in the same day, log file is in append mode. The log file is csv with the following fields: YYYY-MM-GGTHH:MM:SS, protocols, source ipv4, source port, destination ipv4, destination ipv4. An entry esample is 2015-04-05T23:24:57,TCP,10.42.245.36,44023,80.252.91.41,80
 
