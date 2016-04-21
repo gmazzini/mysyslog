@@ -1,5 +1,6 @@
 // mysyslog v0.29 by GM
 // changelog (appears on github since v0.29)
+// different thread parameters v0.30
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
@@ -11,7 +12,7 @@
 #include <locale.h>
 #include <time.h>
 
-#define BUFMSG 1000
+#define BUFMSG 10000
 #define NTHREAD 256
 #define FILECONFIG "/mysyslog/mysyslog.conf"
 #define MAXCLIENT 10
