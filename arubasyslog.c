@@ -1,4 +1,4 @@
-// mysyslog v0.29 by GM
+// arubasyslog v0.01 by GM
 // changelog (appears on github since v0.29)
 
 #include <sys/socket.h>
@@ -13,7 +13,7 @@
 
 #define BUFMSG 1000
 #define NTHREAD 256
-#define FILECONFIG "/mysyslog/mysyslog.conf"
+#define FILECONFIG "/arubasyslog/arubasyslog.conf"
 #define MAXCLIENT 10
 #define IPTOT 1048576
 #define IPCLASS 0b00001010001000000000000000000000 // 10.32.0.0
@@ -61,6 +61,8 @@ void *manage(void *arg_void){
 	ip_tocheck=ntohl(myarg->cliaddr.sin_addr.s_addr);
 	for(i=0;i<totclient;i++)if(ipclient[i]==ip_tocheck)break;
 	if(i==totclient)return NULL;
+	
+	printf("ciao\n");
 	
 	// parsing <PRI>
 	aux=myarg->mesg;
