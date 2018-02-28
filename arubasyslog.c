@@ -1,4 +1,4 @@
-// arubasyslog v0.03 by GM
+// arubasyslog v0.04 by GM
 // changelog (appears on github since v0.29)
 
 #include <sys/socket.h>
@@ -61,9 +61,7 @@ void *manage(void *arg_void){
 	ip_tocheck=ntohl(myarg->cliaddr.sin_addr.s_addr);
 	for(i=0;i<totclient;i++)if(ipclient[i]==ip_tocheck)break;
 	if(i==totclient)return NULL;
-	
-	printf("ciao\n");
-	
+		
 	// parsing <PRI>
 	aux=myarg->mesg;
 	auxmax=aux+myarg->lenmesg;
@@ -74,10 +72,13 @@ void *manage(void *arg_void){
 	if(aux==NULL)return NULL;
 	priority=atoi(cpriority);
 	
-		printf("%d\n",priority);
+	printf("--- %d\n",priority);
 
 	
 	if(priority!=myprio)return NULL;
+	
+	
+	printf("%s\n\n",aux);
 	
 	// string parsing
 	mytime=aux;
