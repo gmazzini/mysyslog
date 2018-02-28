@@ -1,4 +1,4 @@
-// arubasyslog v0.08 by GM
+// arubasyslog v0.09 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -52,7 +52,7 @@ void *manage(void *arg_void){
 	int i,priority;
 	char *aux,*auxmax,buf[128],buf2[128];
 	char *mytime,*host,*channel,*type,*in,*out,*cpriority,*proto,*ipsrc,*portsrc,*ipdst,*portdst;
-	char *aux1,*essid;
+	char *aux1,*essid,*mac;
 	uint32_t ip_tocheck,ipsrcaddr,ipdstaddr;
 	unsigned long ipidx;
 	time_t now;
@@ -84,8 +84,17 @@ void *manage(void *arg_void){
 	aux1=mysearch(aux1,auxmax,'.')
 	if(aux1==NULL)return NULL;
 	
-  
-  printf("%s \n\n",essid);
+printf("%s \n",essid);
+	
+	// looking for mac
+	aux1=strstr(aux,"mac");
+	if(aux1==NULL)return NULL;
+	mac=mysearch(aux1,auxmax,'-');
+	if(essid==NULL)return NULL;
+	aux1=mysearch(aux1,auxmax,' ')
+	if(aux1==NULL)return NULL;
+	
+printf("%s \n\n",mac);
 
   
 	// string parsing
