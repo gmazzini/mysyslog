@@ -1,4 +1,4 @@
-// arubasyslog v0.25 by GM
+// arubasyslog v0.27 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -15,7 +15,6 @@
 #define SSIDLEN 64
 #define NTHREAD 256
 #define FILECONFIG "/arubasyslog/arubasyslog.conf"
-#define MAXCLIENT 10
 #define IPTOT 1048576
 #define IPCLASS 0b00001010001000000000000000000000 // 10.32.0.0
 #define IPTEST  0b00001010001011111111111111111111 // 10.47.255.255
@@ -27,8 +26,7 @@ struct arg_pass {
 	struct sockaddr_in cliaddr;
 };
 pthread_t *tid;
-int sockfd,myprio,totclient;
-unsigned long ipclient[MAXCLIENT];
+int sockfd,myprio;
 char ssidtolog[SSIDLEN];
 pthread_mutex_t lock;
 time_t *ip_last;
@@ -62,8 +60,6 @@ void *manage(void *arg_void){
 	
 	// check address
 	ip_tocheck=ntohl(myarg->cliaddr.sin_addr.s_addr);
-	for(i=0;i<totclient;i++)if(ipclient[i]==ip_tocheck)break;
-	if(i==totclient)return NULL;
 		
 	// parsing <PRI>
 	aux=myarg->mesg;
@@ -104,6 +100,7 @@ void *manage(void *arg_void){
 		case 'f': type=3; break; //offline
 		default: type=0;
 	}
+	if/type==0)return NULL;
 
 printf("%lu %s %s %d\n",ip_tocheck,mac,recv_sta,type);
 	
@@ -132,12 +129,7 @@ int main(int argc, char**argv){
 	
 	// parse configuration
 	fp=fopen(FILECONFIG,"rt");
-	fscanf(fp,"%d %d %s %d",&listenport,&myprio,ssidtolog,&totclient);
-	for(i=0;i<totclient;i++){
-		fscanf(fp,"%s",buf);
-		inet_pton(AF_INET,buf,&(auxaddr.sin_addr));
-		ipclient[i]=ntohl(auxaddr.sin_addr.s_addr);
-	}
+	fscanf(fp,"%d %d %s %d",&listenport,&myprio,ssidtolog);
 	fclose(fp);
 	
 	// log file open
