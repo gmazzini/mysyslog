@@ -1,4 +1,4 @@
-// arubasyslog v0.23 by GM
+// arubasyslog v0.25 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -98,7 +98,7 @@ void *manage(void *arg_void){
 	if(recv_sta==NULL)return NULL;
 	aux1=mysearch(recv_sta,auxmax,':');
 	if(aux1==NULL)return NULL;
-	switch(*(recv_sta+11)){
+	switch(*(recv_sta+10)){
 		case 'n': type=1; break; //online
 		case 'g': type=2; break; //ageout
 		case 'f': type=3; break; //offline
