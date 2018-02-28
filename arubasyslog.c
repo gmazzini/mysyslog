@@ -1,4 +1,4 @@
-// arubasyslog v0.02 by GM
+// arubasyslog v0.03 by GM
 // changelog (appears on github since v0.29)
 
 #include <sys/socket.h>
@@ -73,6 +73,10 @@ void *manage(void *arg_void){
 	aux=mysearch(aux,auxmax,'>');
 	if(aux==NULL)return NULL;
 	priority=atoi(cpriority);
+	
+		printf("%d\n",priority);
+
+	
 	if(priority!=myprio)return NULL;
 	
 	// string parsing
