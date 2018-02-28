@@ -1,4 +1,4 @@
-// arubasyslog v0.38 by GM
+// arubasyslog v0.40 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -104,7 +104,7 @@ void *manage(void *arg_void){
 	ip_print=htonl(ip_ap);
 	inet_ntop(AF_INET,&ip_print,buf,sizeof(buf));	
 	pthread_mutex_lock(&lock);
-	fprintf(fp,"%lu %s %s %d %lu\n",now,buf,mac,type,fnv_32a_buf(mac,17,0));
+	fprintf(fp,"%lu %s %lu %d\n",now,buf,fnv_32a_buf(mac,17,0),type);
 	fflush(fp);
 	pthread_mutex_unlock(&lock);
 	
