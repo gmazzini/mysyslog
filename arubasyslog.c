@@ -1,5 +1,5 @@
 // arubasyslog v0.04 by GM
-// changelog (appears on github since v0.29)
+// changelog
 
 #include <sys/socket.h>
 #include <arpa/inet.h>
