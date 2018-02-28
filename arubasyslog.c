@@ -1,4 +1,4 @@
-// arubasyslog v0.01 by GM
+// arubasyslog v0.02 by GM
 // changelog (appears on github since v0.29)
 
 #include <sys/socket.h>
@@ -184,7 +184,7 @@ int main(int argc, char**argv){
 	
 	// log file open
 	now=time(NULL);
-	strftime(buf,128,"/mysyslog/log/%Y%m%d.log",localtime(&now));
+	strftime(buf,128,"/arubasyslog/log/%Y%m%d.log",localtime(&now));
 	fp=fopen(buf,"a+");
 	
 	// bindind
