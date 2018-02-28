@@ -1,4 +1,4 @@
-// arubasyslog v0.27 by GM
+// arubasyslog v0.28 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -100,7 +100,7 @@ void *manage(void *arg_void){
 		case 'f': type=3; break; //offline
 		default: type=0;
 	}
-	if/type==0)return NULL;
+	if(type==0)return NULL;
 
 printf("%lu %s %s %d\n",ip_tocheck,mac,recv_sta,type);
 	
