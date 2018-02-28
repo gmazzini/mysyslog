@@ -1,4 +1,4 @@
-// arubasyslog v0.34 by GM
+// arubasyslog v0.35 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -117,6 +117,7 @@ int main(int argc, char**argv){
 	int listenport;
 	socklen_t len;
 	char buf[128];
+	struct sockaddr_in servaddr;
 	time_t now;
 	
 	// initialization
