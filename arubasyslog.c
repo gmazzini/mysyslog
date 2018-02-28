@@ -1,4 +1,4 @@
-// arubasyslog v0.14 by GM
+// arubasyslog v0.16 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -12,6 +12,7 @@
 #include <time.h>
 
 #define BUFMSG 1000
+#define SSIDLEN 64
 #define NTHREAD 256
 #define FILECONFIG "/arubasyslog/arubasyslog.conf"
 #define MAXCLIENT 10
@@ -28,6 +29,7 @@ struct arg_pass {
 pthread_t *tid;
 int sockfd,myprio,totclient;
 unsigned long ipclient[MAXCLIENT];
+char ssidtolog[SSIDLEN];
 pthread_mutex_t lock;
 time_t *ip_last;
 FILE *fp;
@@ -81,6 +83,7 @@ void *manage(void *arg_void){
 	if(essid==NULL)return NULL;
 	aux1=mysearch(aux1,auxmax,'.');
 	if(aux1==NULL)return NULL;
+	if(!strcasecmp(essid,ssidtolog))return NULL;
 	
 	// looking for mac
 	aux1=strstr(aux,"mac");
@@ -96,7 +99,7 @@ void *manage(void *arg_void){
 	aux1=mysearch(recv_sta,auxmax,':');
 	if(aux1==NULL)return NULL;
 
-printf("%s %lu %s %s \n\n",essid,ip_tocheck,mac,recv_sta);
+printf("%s %lu %s %s\n",essid,ip_tocheck,mac,recv_sta);
 	
 return NULL;
 	
@@ -123,7 +126,7 @@ int main(int argc, char**argv){
 	
 	// parse configuration
 	fp=fopen(FILECONFIG,"rt");
-	fscanf(fp,"%d %d %d",&listenport,&myprio,&totclient);
+	fscanf(fp,"%d %d %s %d",&listenport,&myprio,ssidtolog,&totclient);
 	for(i=0;i<totclient;i++){
 		fscanf(fp,"%s",buf);
 		inet_pton(AF_INET,buf,&(auxaddr.sin_addr));
