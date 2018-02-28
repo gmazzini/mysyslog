@@ -1,4 +1,4 @@
-// arubasyslog v0.06 by GM
+// arubasyslog v0.07 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -77,13 +77,15 @@ void *manage(void *arg_void){
 	printf("%s\n",aux);
 	
 	// looking for essid presence
-	essid=strstr(aux,"essid");
+	aux1=strstr(aux,"essid");
+	if(aux1==NULL)return NULL;
+	essid=mysearch(aux1,auxmax,'-');
 	if(essid==NULL)return NULL;
-	aux1=mysearch(essid,auxmax,'.');
-	
+	aux1=mysearch(aux1,auxmax,".")
+	if(aux1==NULL)return NULL;
 	
   
-  printf("%s %c\n\n",essid,aux1);
+  printf("%s \n\n",essid);
 
   
 	// string parsing
