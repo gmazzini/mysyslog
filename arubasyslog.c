@@ -1,4 +1,4 @@
-// arubasyslog v0.31 by GM
+// arubasyslog v0.32 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -53,7 +53,7 @@ void *manage(void *arg_void){
 	char *aux,*auxmax,buf[128],buf2[128];
 	char *cpriority;
 	char *aux1,*essid,*mac,*recv_sta;
-	uint32_t ip_tocheck,ipsrcaddr,ipdstaddr;
+	uint32_t ip_tocheck,ipsrcaddr,ipdstaddr,ip_print;
 	unsigned long ipidx;
 	time_t now;
 	struct sockaddr_in netip;
@@ -102,8 +102,12 @@ void *manage(void *arg_void){
 		default: type=0;
 	}
 	if(type==0)return NULL;
+	
+	
+	ip_print=htonl(ip_tocheck);
+	inet_ntop(AF_INET,&ip_print,buf,sizeof(buf));	
 	pthread_mutex_lock(&lock);
-	fprintf(fp,"%lu %lu %s %d\n",now,ip_tocheck,mac,type);
+	fprintf(fp,"%lu %lu %s %s %d\n",now,ip_tocheck,buf,mac,type);
 	fflush(fp);
 	pthread_mutex_unlock(&lock);
 	
