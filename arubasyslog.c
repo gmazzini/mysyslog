@@ -1,4 +1,4 @@
-// arubasyslog v0.20 by GM
+// arubasyslog v0.22 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -51,7 +51,7 @@ char *mysearch(char *ptr,char *end,char delimiter){
 // main process
 void *manage(void *arg_void){
 	struct arg_pass *myarg=(struct arg_pass *)arg_void;
-	int i,priority;
+	int i,priority,type;
 	char *aux,*auxmax,buf[128],buf2[128];
 	char *cpriority;
 	char *aux1,*essid,*mac,*recv_sta;
@@ -98,6 +98,12 @@ void *manage(void *arg_void){
 	if(recv_sta==NULL)return NULL;
 	aux1=mysearch(recv_sta,auxmax,':');
 	if(aux1==NULL)return NULL;
+	switch(*(recv_sta+11)){
+		case 'n': type=1; break; //online
+		case 'g': type=2; break; //ageout
+		case 'f': type=3; break; //offline
+		default: type=0;
+	}
 
 printf("%lu %s %s\n",ip_tocheck,mac,recv_sta);
 	
