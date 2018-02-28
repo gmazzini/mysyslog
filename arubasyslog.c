@@ -1,4 +1,4 @@
-// arubasyslog v0.12 by GM
+// arubasyslog v0.13 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -73,8 +73,6 @@ void *manage(void *arg_void){
 	if(aux==NULL)return NULL;
 	priority=atoi(cpriority);
 	if(priority!=myprio)return NULL;
-		
-	printf("%s\n",aux);
 	
 	// looking for essid presence
 	aux1=strstr(aux,"essid");
@@ -84,8 +82,6 @@ void *manage(void *arg_void){
 	aux1=mysearch(aux1,auxmax,'.');
 	if(aux1==NULL)return NULL;
 	
-printf("%s \n",essid);
-	
 	// looking for mac
 	aux1=strstr(aux,"mac");
 	if(aux1==NULL)return NULL;
@@ -94,17 +90,15 @@ printf("%s \n",essid);
 	aux1=mysearch(aux1,auxmax,' ');
 	if(aux1==NULL)return NULL;
 	
-printf("%s \n",mac);
-	
 	// looking for message
 	recv_sta=strstr(aux,"recv_sta_");
 	if(recv_sta==NULL)return NULL;
 	aux1=mysearch(recv_sta,auxmax,':');
 	if(aux1==NULL)return NULL;
 
-printf("%s \n\n",recv_sta);
+printf("%s %lu %s %s \n\n",essid,ip_tocheck,mac,recv_sta);
 	
-
+return NULL;
   
 	// string parsing
 	mytime=aux;
