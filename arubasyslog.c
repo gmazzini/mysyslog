@@ -1,4 +1,4 @@
-// arubasyslog v0.35 by GM
+// arubasyslog v0.36 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -10,6 +10,7 @@
 #include <stdlib.h>
 #include <locale.h>
 #include <time.h>
+#include "fnv.h"
 
 #define BUFMSG 1000
 #define SSIDLEN 64
