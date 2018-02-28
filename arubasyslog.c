@@ -1,4 +1,4 @@
-// arubasyslog v0.32 by GM
+// arubasyslog v0.34 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -49,18 +49,15 @@ char *mysearch(char *ptr,char *end,char delimiter){
 // main process
 void *manage(void *arg_void){
 	struct arg_pass *myarg=(struct arg_pass *)arg_void;
-	int i,priority,type;
-	char *aux,*auxmax,buf[128],buf2[128];
-	char *cpriority;
-	char *aux1,*essid,*mac,*recv_sta;
-	uint32_t ip_tocheck,ipsrcaddr,ipdstaddr,ip_print;
-	unsigned long ipidx;
+	int priority,type;
+	char *aux,*aux1,*auxmax,buf[128],*cpriority;
+	char *essid,*mac,*recv_sta;
+	uint32_t ip_ap,ip_print;
 	time_t now;
-	struct sockaddr_in netip;
 	
 	now=time(NULL);
 	// check address
-	ip_tocheck=ntohl(myarg->cliaddr.sin_addr.s_addr);
+	ip_ap=ntohl(myarg->cliaddr.sin_addr.s_addr);
 		
 	// parsing <PRI>
 	aux=myarg->mesg;
@@ -104,10 +101,10 @@ void *manage(void *arg_void){
 	if(type==0)return NULL;
 	
 	
-	ip_print=htonl(ip_tocheck);
+	ip_print=htonl(ip_ap);
 	inet_ntop(AF_INET,&ip_print,buf,sizeof(buf));	
 	pthread_mutex_lock(&lock);
-	fprintf(fp,"%lu %lu %s %s %d\n",now,ip_tocheck,buf,mac,type);
+	fprintf(fp,"%lu %s %s %d\n",now,buf,mac,type);
 	fflush(fp);
 	pthread_mutex_unlock(&lock);
 	
@@ -118,7 +115,6 @@ int main(int argc, char**argv){
 	struct arg_pass *myargs;
 	unsigned long i,j;
 	int listenport;
-	struct sockaddr_in servaddr,auxaddr;
 	socklen_t len;
 	char buf[128];
 	time_t now;
