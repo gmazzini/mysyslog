@@ -1,4 +1,4 @@
-// arubasyslog v0.13 by GM
+// arubasyslog v0.14 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -51,7 +51,7 @@ void *manage(void *arg_void){
 	struct arg_pass *myarg=(struct arg_pass *)arg_void;
 	int i,priority;
 	char *aux,*auxmax,buf[128],buf2[128];
-	char *mytime,*host,*channel,*type,*in,*out,*cpriority,*proto,*ipsrc,*portsrc,*ipdst,*portdst;
+	char *cpriority;
 	char *aux1,*essid,*mac,*recv_sta;
 	uint32_t ip_tocheck,ipsrcaddr,ipdstaddr;
 	unsigned long ipidx;
@@ -99,85 +99,9 @@ void *manage(void *arg_void){
 printf("%s %lu %s %s \n\n",essid,ip_tocheck,mac,recv_sta);
 	
 return NULL;
-  
-	// string parsing
-	mytime=aux;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	host=aux;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	channel=aux;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	type=aux;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	in=aux;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	out=aux;
-	aux=mysearch(aux,auxmax,',');
-	if(aux==NULL)return NULL;
-	aux=mysearch(aux,auxmax,',');
-	if(aux==NULL)return NULL;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	proto=aux;
-	aux=mysearch(aux,auxmax,',');
-	if(aux==NULL)return NULL;
-	if(strlen(proto)>3)*(proto+3)='\0';
-	aux=mysearch(aux,auxmax,' ');
-	if(aux==NULL)return NULL;
-	ipsrc=aux;
-	aux=mysearch(aux,auxmax,':');
-	if(aux==NULL)return NULL;
-	portsrc=aux;
-	aux=mysearch(aux,auxmax,'-');
-	if(aux==NULL)return NULL;
-	aux=mysearch(aux,auxmax,'>');
-	if(aux==NULL)return NULL;
-	ipdst=aux;
-	aux=mysearch(aux,auxmax,':');
-	if(aux==NULL)return NULL;
-	portdst=aux;
-	aux=mysearch(aux,auxmax,',');
-	if(aux==NULL)return NULL;
 	
-	// check if UDP or TCP
-	if(strncmp(proto,"UDP",3)!=0 && strncmp(proto,"TCP",3)!=0)return NULL;
 	
-	// check ipsrc inside 10.32.0.0/12
-	inet_pton(AF_INET,ipsrc,&(netip.sin_addr));
-	ipsrcaddr=ntohl(netip.sin_addr.s_addr);
-	if((ipsrcaddr&IPMASK)!=IPCLASS)return NULL;
-	ipidx=ipsrcaddr-IPCLASS;
 	
-	// output
-	if(ipsrcaddr!=IPCLASS){
-		now=time(NULL);
-		ip_last[ipidx]=now;
-		// no output id IPTEST
-		if(ipsrcaddr!=IPTEST){
-			strftime(buf,128,"%Y-%m-%dT%H:%M:%S",localtime(&now));
-			pthread_mutex_lock(&lock);
-			fprintf(fp,"%s,%s,%s,%ld,%s,%ld\n",buf,proto,ipsrc,atol(portsrc),ipdst,atol(portdst));
-			fflush(fp);
-			pthread_mutex_unlock(&lock);
-		}
-	}
-	else {
-		inet_pton(AF_INET,ipdst,&(netip.sin_addr));
-		ipdstaddr=ntohl(netip.sin_addr.s_addr);
-		if((ipdstaddr&IPMASK)!=IPCLASS)return NULL;
-		ipidx=ipdstaddr-IPCLASS;
-		now=ip_last[ipidx];
-		strftime(buf,128,"%Y-%m-%dT%H:%M:%S\n",localtime(&now));
-		sendto(sockfd,buf,strlen(buf),0,(struct sockaddr *)&myarg->cliaddr,sizeof(myarg->cliaddr));
-	}
-	return NULL;
 }
 
 int main(int argc, char**argv){
