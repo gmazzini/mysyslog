@@ -1,4 +1,4 @@
-// arubasyslog v0.30 by GM
+// arubasyslog v0.31 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -102,8 +102,10 @@ void *manage(void *arg_void){
 		default: type=0;
 	}
 	if(type==0)return NULL;
-
-printf("%lu %lu %s %d\n",now,ip_tocheck,mac,type);
+	pthread_mutex_lock(&lock);
+	fprintf(fp,"%lu %lu %s %d\n",now,ip_tocheck,mac,type);
+	fflush(fp);
+	pthread_mutex_unlock(&lock);
 	
 	return NULL;	
 }
