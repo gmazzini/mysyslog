@@ -52,6 +52,7 @@ void *manage(void *arg_void){
 	int i,priority;
 	char *aux,*auxmax,buf[128],buf2[128];
 	char *mytime,*host,*channel,*type,*in,*out,*cpriority,*proto,*ipsrc,*portsrc,*ipdst,*portdst;
+  char *essid;
 	uint32_t ip_tocheck,ipsrcaddr,ipdstaddr;
 	unsigned long ipidx;
 	time_t now;
@@ -71,15 +72,17 @@ void *manage(void *arg_void){
 	aux=mysearch(aux,auxmax,'>');
 	if(aux==NULL)return NULL;
 	priority=atoi(cpriority);
-	
-	printf("--- %d\n",priority);
-
-	
 	if(priority!=myprio)return NULL;
+		
+	printf("%s\n",aux);
 	
-	
-	printf("%s\n\n",aux);
-	
+  // looking for essid presence
+  essid=strstr(aux,"essid");
+  if(essid==NULL)return NULL;
+  
+  printf("%s\n\n",essid);
+
+  
 	// string parsing
 	mytime=aux;
 	aux=mysearch(aux,auxmax,' ');
