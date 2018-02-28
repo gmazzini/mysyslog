@@ -105,7 +105,7 @@ void *manage(void *arg_void){
 		default: type=0;
 	}
 
-printf("%lu %s %s\n",ip_tocheck,mac,recv_sta);
+printf("%lu %s %s %d\n",ip_tocheck,mac,recv_sta,type);
 	
 return NULL;
 	
