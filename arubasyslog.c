@@ -1,4 +1,4 @@
-// arubasyslog v0.28 by GM
+// arubasyslog v0.29 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -102,12 +102,9 @@ void *manage(void *arg_void){
 	}
 	if(type==0)return NULL;
 
-printf("%lu %s %s %d\n",ip_tocheck,mac,recv_sta,type);
+printf("%lu %s %d\n",ip_tocheck,mac,type);
 	
-return NULL;
-	
-	
-	
+	return NULL;	
 }
 
 int main(int argc, char**argv){
