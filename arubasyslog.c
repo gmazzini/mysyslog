@@ -1,4 +1,4 @@
-// arubasyslog v0.19 by GM
+// arubasyslog v0.20 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -83,8 +83,6 @@ void *manage(void *arg_void){
 	if(essid==NULL)return NULL;
 	aux1=mysearch(aux1,auxmax,'.');
 	if(aux1==NULL)return NULL;
-	
-	printf("%s %s--\n",essid,ssidtolog);
 	if(strcasecmp(essid,ssidtolog)!=0)return NULL;
 	
 	// looking for mac
@@ -101,7 +99,7 @@ void *manage(void *arg_void){
 	aux1=mysearch(recv_sta,auxmax,':');
 	if(aux1==NULL)return NULL;
 
-printf("%s %lu %s %s\n",essid,ip_tocheck,mac,recv_sta);
+printf("%lu %s %s\n",ip_tocheck,mac,recv_sta);
 	
 return NULL;
 	
