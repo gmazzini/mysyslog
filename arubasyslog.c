@@ -1,4 +1,4 @@
-// arubasyslog v0.29 by GM
+// arubasyslog v0.30 by GM
 // changelog
 
 #include <sys/socket.h>
@@ -58,6 +58,7 @@ void *manage(void *arg_void){
 	time_t now;
 	struct sockaddr_in netip;
 	
+	now=time(NULL);
 	// check address
 	ip_tocheck=ntohl(myarg->cliaddr.sin_addr.s_addr);
 		
@@ -102,7 +103,7 @@ void *manage(void *arg_void){
 	}
 	if(type==0)return NULL;
 
-printf("%lu %s %d\n",ip_tocheck,mac,type);
+printf("%lu %lu %s %d\n",now,ip_tocheck,mac,type);
 	
 	return NULL;	
 }
